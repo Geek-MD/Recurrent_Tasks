@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Awaitable, Callable
 
 from homeassistant.components import todo
 from homeassistant.core import HomeAssistant
@@ -16,7 +16,9 @@ STORAGE_VERSION = 1
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: Callable[[list[todo.TodoListEntity], bool], Awaitable[None]],
 ) -> None:
     """Configura la lista de tareas desde la entrada de configuración."""
     store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
