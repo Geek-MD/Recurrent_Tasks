@@ -1,0 +1,14 @@
+{
+  "title": "Recurrent Tasks",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Recurrent Tasks Setup",
+        "description": "Configure a local to-do list with recurrence support (future versions).",
+        "data": {
+          "name": "List name"
+        }
+      }
+    }
+  }
+}
