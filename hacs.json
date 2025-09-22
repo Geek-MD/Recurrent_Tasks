@@ -1,0 +1,10 @@
+{
+  "name": "Recurrent Tasks",
+  "content_in_root": false,
+  "domains": ["recurrent_tasks"],
+  "country": "global",
+  "render_readme": true,
+  "filename": "custom_components/recurrent_tasks/manifest.json",
+  "category": "integration",
+  "homeassistant": "2024.6.0"
+}
