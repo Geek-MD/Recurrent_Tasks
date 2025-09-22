@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-import voluptuous as vol
+from typing import Any
 
 from homeassistant.components import todo
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers import config_validation as cv, entity_platform
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
+from homeassistant.config_entries import ConfigEntry
 
 from .const import DOMAIN
 
@@ -15,10 +15,12 @@ STORAGE_KEY = f"{DOMAIN}.storage"
 STORAGE_VERSION = 1
 
 
-async def async_setup_entry(hass: HomeAssistant, entry, async_add_entities) -> None:
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities
+) -> None:
     """Configura la lista de tareas desde la entrada de configuración."""
     store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
-    tasks = await store.async_load() or []
+    tasks: list[dict[str, Any]] = await store.async_load() or []
 
     entity = RecurrentTasksEntity(hass, store, entry.title, tasks)
     async_add_entities([entity], True)
@@ -29,25 +31,27 @@ class RecurrentTasksEntity(todo.TodoListEntity):
 
     _attr_has_entity_name = True
 
-    def __init__(self, hass: HomeAssistant, store: Store, name: str, tasks: list) -> None:
+    def __init__(
+        self, hass: HomeAssistant, store: Store, name: str, tasks: list[dict[str, Any]]
+    ) -> None:
         """Inicializa la lista de tareas."""
         self.hass = hass
         self._store = store
         self._attr_name = name
-        self._tasks: list[dict] = tasks
+        self._tasks: list[dict[str, Any]] = tasks
 
     @property
-    def todo_items(self) -> list[dict]:
+    def todo_items(self) -> list[dict[str, Any]]:
         """Retorna las tareas actuales."""
         return self._tasks
 
-    async def async_create_todo_item(self, item: dict) -> None:
+    async def async_create_todo_item(self, item: dict[str, Any]) -> None:
         """Crea una nueva tarea."""
         self._tasks.append(item)
         await self._store.async_save(self._tasks)
         self.async_write_ha_state()
 
-    async def async_update_todo_item(self, item: dict) -> None:
+    async def async_update_todo_item(self, item: dict[str, Any]) -> None:
         """Actualiza una tarea existente."""
         for idx, existing in enumerate(self._tasks):
             if existing["uid"] == item["uid"]:
