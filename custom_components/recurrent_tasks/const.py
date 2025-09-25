@@ -1,19 +1,18 @@
-"""Constantes para la integración Recurrent Tasks."""
+"""Constants for the Recurrent Tasks integration."""
 
 from __future__ import annotations
 
-from enum import Enum, IntFlag
+from enum import IntFlag, StrEnum
 from typing import TYPE_CHECKING
 
 from homeassistant.util.hass_dict import HassKey
 
 if TYPE_CHECKING:
     from homeassistant.helpers.entity_component import EntityComponent
-    from homeassistant.components.todo import TodoListEntity
-
+    from . import RecurrentTasksListEntity
 
 DOMAIN = "recurrent_tasks"
-DATA_COMPONENT: HassKey[EntityComponent["TodoListEntity"]] = HassKey(DOMAIN)
+DATA_COMPONENT: HassKey[EntityComponent["RecurrentTasksListEntity"]] = HassKey(DOMAIN)
 
 ATTR_DUE = "due"
 ATTR_DUE_DATE = "due_date"
@@ -24,14 +23,8 @@ ATTR_RENAME = "rename"
 ATTR_STATUS = "status"
 
 
-class StrEnum(str, Enum):
-    """Compatibilidad con Python < 3.11."""
-
-    pass
-
-
-class TodoServices(StrEnum):
-    """Servicios soportados por la integración de tareas."""
+class RecurrentTasksServices(StrEnum):
+    """Services for the Recurrent Tasks integration."""
 
     ADD_ITEM = "add_item"
     UPDATE_ITEM = "update_item"
@@ -40,8 +33,8 @@ class TodoServices(StrEnum):
     REMOVE_COMPLETED_ITEMS = "remove_completed_items"
 
 
-class TodoListEntityFeature(IntFlag):
-    """Características soportadas por la entidad de lista de tareas."""
+class RecurrentTasksEntityFeature(IntFlag):
+    """Supported features of the Recurrent Tasks list entity."""
 
     CREATE_TODO_ITEM = 1
     DELETE_TODO_ITEM = 2
@@ -52,8 +45,8 @@ class TodoListEntityFeature(IntFlag):
     SET_DESCRIPTION_ON_ITEM = 64
 
 
-class TodoItemStatus(StrEnum):
-    """Estado de un ítem en la lista de tareas (subset de RFC5545)."""
+class RecurrentTasksItemStatus(StrEnum):
+    """Status or confirmation of a Recurrent Tasks item."""
 
     NEEDS_ACTION = "needs_action"
     COMPLETED = "completed"
