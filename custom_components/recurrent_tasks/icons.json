@@ -1,12 +1,24 @@
 {
   "entity": {
-    "todo": "mdi:clipboard-list"
+    "todo": {
+      "default": "mdi:clipboard-list"
+    }
   },
   "services": {
-    "add_item": "mdi:clipboard-plus",
-    "get_items": "mdi:clipboard-arrow-down",
-    "remove_completed_items": "mdi:clipboard-remove",
-    "remove_item": "mdi:clipboard-minus",
-    "update_item": "mdi:clipboard-edit"
+    "add_item": {
+      "default": "mdi:clipboard-plus"
+    },
+    "get_items": {
+      "default": "mdi:clipboard-arrow-down"
+    },
+    "remove_completed_items": {
+      "default": "mdi:clipboard-remove"
+    },
+    "remove_item": {
+      "default": "mdi:clipboard-minus"
+    },
+    "update_item": {
+      "default": "mdi:clipboard-edit"
+    }
   }
 }
